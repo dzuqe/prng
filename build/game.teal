@@ -1,0 +1,142 @@
+#pragma version 2
+txn ApplicationID
+int 0
+==
+bnz l20
+txna ApplicationArgs 0
+byte "take_shot"
+==
+bnz l11
+txna ApplicationArgs 0
+byte "reset_game"
+==
+bnz l8
+txn OnCompletion
+int UpdateApplication
+==
+bnz l7
+txn OnCompletion
+int DeleteApplication
+==
+bnz l6
+err
+l6:
+txn Sender
+byte "admin"
+app_global_get
+==
+return
+l7:
+txn Sender
+byte "admin"
+app_global_get
+==
+return
+l8:
+txn Sender
+byte "admin"
+app_global_get
+==
+bz l10
+int 1
+return
+l10:
+byte "x"
+int 0
+app_global_put
+byte "hit"
+int 3
+app_global_put
+byte "bullet_loc"
+txna ApplicationArgs 1
+btoi
+app_global_put
+byte "miss"
+int 0
+app_global_put
+int 1
+return
+l11:
+byte "hit"
+app_global_get
+int 0
+<=
+bz l13
+int 0
+return
+l13:
+byte "x"
+byte "a"
+app_global_get
+byte "x"
+app_global_get
+*
+byte "c"
+app_global_get
++
+byte "m"
+app_global_get
+%
+app_global_put
+byte "x"
+app_global_get
+int 6
+%
+store 0
+load 0
+byte "bullet_loc"
+app_global_get
+==
+bnz l15
+int 1
+return
+l15:
+byte "hit"
+byte "hit"
+app_global_get
+int 1
+-
+app_global_put
+load 0
+byte "bullet_loc"
+app_global_get
+!=
+bnz l18
+int 1
+return
+l18:
+byte "miss"
+byte "miss"
+app_global_get
+int 1
++
+app_global_put
+int 1
+return
+l20:
+byte "a"
+int 75
+app_global_put
+byte "c"
+int 74
+app_global_put
+byte "m"
+int 65537
+app_global_put
+byte "x"
+int 0
+app_global_put
+byte "hit"
+int 3
+app_global_put
+byte "bullet_loc"
+int 4
+app_global_put
+byte "miss"
+int 0
+app_global_put
+byte "admin"
+txn Sender
+app_global_put
+int 1
+return
