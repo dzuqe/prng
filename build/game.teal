@@ -41,9 +41,6 @@ bz l10
 int 1
 return
 l10:
-byte "x"
-int 0
-app_global_put
 byte "hit"
 int 3
 app_global_put
@@ -97,6 +94,11 @@ app_global_get
 int 1
 -
 app_global_put
+byte "x"
+app_global_get
+int 6
+%
+store 0
 load 0
 byte "bullet_loc"
 app_global_get
@@ -124,7 +126,7 @@ byte "m"
 int 65537
 app_global_put
 byte "x"
-int 0
+int 74
 app_global_put
 byte "hit"
 int 3
