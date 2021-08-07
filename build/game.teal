@@ -44,7 +44,7 @@ return
 l9:
 byte "hit"
 app_global_get
-int 3
+int 10
 >=
 bz l11
 int 0
@@ -115,7 +115,7 @@ byte "m"
 int 65537
 app_global_put
 byte "x"
-int 74
+int 28652
 app_global_put
 byte "hit"
 int 0
