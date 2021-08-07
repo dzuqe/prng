@@ -2,21 +2,21 @@
 txn ApplicationID
 int 0
 ==
-bnz l20
-txna ApplicationArgs 0
-byte "take_shot"
-==
-bnz l11
-txna ApplicationArgs 0
-byte "reset_game"
-==
-bnz l8
+bnz l17
 txn OnCompletion
 int UpdateApplication
 ==
-bnz l7
+bnz l16
 txn OnCompletion
 int DeleteApplication
+==
+bnz l15
+txna ApplicationArgs 0
+byte "take_shot"
+==
+bnz l9
+txna ApplicationArgs 0
+byte "reset_game"
 ==
 bnz l6
 err
@@ -25,24 +25,12 @@ txn Sender
 byte "admin"
 app_global_get
 ==
-return
-l7:
-txn Sender
-byte "admin"
-app_global_get
-==
-return
-l8:
-txn Sender
-byte "admin"
-app_global_get
-==
-bz l10
+bz l8
 int 1
 return
-l10:
+l8:
 byte "hit"
-int 3
+int 0
 app_global_put
 byte "bullet_loc"
 txna ApplicationArgs 1
@@ -53,15 +41,15 @@ int 0
 app_global_put
 int 1
 return
-l11:
+l9:
 byte "hit"
 app_global_get
-int 0
-<=
-bz l13
+int 3
+>=
+bz l11
 int 0
 return
-l13:
+l11:
 byte "x"
 byte "a"
 app_global_get
@@ -84,29 +72,7 @@ load 0
 byte "bullet_loc"
 app_global_get
 ==
-bnz l15
-int 1
-return
-l15:
-byte "hit"
-byte "hit"
-app_global_get
-int 1
--
-app_global_put
-byte "x"
-app_global_get
-int 6
-%
-store 0
-load 0
-byte "bullet_loc"
-app_global_get
-!=
-bnz l18
-int 1
-return
-l18:
+bnz l13
 byte "miss"
 byte "miss"
 app_global_get
@@ -115,7 +81,30 @@ int 1
 app_global_put
 int 1
 return
-l20:
+l13:
+byte "hit"
+byte "hit"
+app_global_get
+int 1
++
+app_global_put
+int 1
+return
+int 1
+return
+l15:
+txn Sender
+byte "admin"
+app_global_get
+==
+return
+l16:
+txn Sender
+byte "admin"
+app_global_get
+==
+return
+l17:
 byte "a"
 int 75
 app_global_put
@@ -129,7 +118,7 @@ byte "x"
 int 74
 app_global_put
 byte "hit"
-int 3
+int 0
 app_global_put
 byte "bullet_loc"
 int 4
