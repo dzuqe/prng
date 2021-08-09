@@ -2,15 +2,67 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
-  background-color: gray;
+  background-image: url(https://2.bp.blogspot.com/-AK5HHX75T4o/VRdWPoeJJwI/AAAAAAAAAk8/pKw7RKALarc/s1600/dead%2Bman.jpg);
+  background-size: 100%;
 }
 
 .viewport {
   width: 480px;
-  height: 330px;
   background-color: black;
   color: white;
-  margin: 100px auto;
+  margin: 100px auto 0 auto;
+}
+
+#health {
+  text-align: left;
+  width: 60%;
+  float : left;
+}
+
+#buttons {
+  width: 30%;
+  float: right;
+}
+
+.health {
+  width: 480px;
+  background-color: black;
+  color: white;
+  margin: 0px auto;
+}
+
+.health > img {
+  float: left;
+  width: 60px;
+}
+
+.health > .desc {
+  float: left;
+}
+
+button {
+  float: right;
+  margin: 5px;
+  border: none;
+  padding: 5px 8px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+#message {
+  width: 100%;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+.algo {
+  width: 24px;
+  height: 24px;
+  background-image: url(https://icodrops.com/wp-content/uploads/2018/03/Algorand-logo.jpg);
+  background-size: 24px;
+
 }
