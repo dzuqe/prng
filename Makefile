@@ -1,5 +1,8 @@
 all: js
 
+teal:
+	python contract.py
+
 js:
 	rollup -c rollup.config.js
 
