@@ -2,9 +2,9 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import {CallApplTxn} from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
 
-const dead = "https://i.imgur.com/32rkmbN.png";
-const survive = "https://i.imgur.com/Lkstrxv.gif";
-const intro = "https://i.imgur.com/l3u1Isk.gif";
+const dead = "https://i.imgur.com/v7jtN5a.png";
+const shatter = "https://i.imgur.com/ks36bpu.gif";
+const intro = "https://i.imgur.com/IQT5yTp.png";
 
 class App {
   elem: HTMLElement;
@@ -107,7 +107,7 @@ class App {
       let signedTxn = await this.wallet.signTransaction(txn);
       await this.algodClient.sendRawTransaction(signedTxn.blob).do();
       this.readapp();
-      this.updateImage(survive);
+      this.updateImage(intro);
     } catch(err) {
       console.log("errored or died: " + this.gamestate.hit.uint + " > 10");
       this.updateImage(dead);
@@ -134,10 +134,12 @@ class App {
         if (this.gamestate.hit.uint !== p.hit.uint) {
           console.log('got hit');
           this.msg.innerText = 'got hit';
+          this.updateImage(shatter);
         } 
         if (this.gamestate.miss.uint !== p.miss.uint) {
           console.log('missed');
           this.msg.innerText = 'missed';
+          this.updateImage(intro);
         }
       } else {
         if (p.hit.uint >= this.maxhit) {
