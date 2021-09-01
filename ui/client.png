@@ -1,3 +1,4 @@
+7€xq&
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -6760,48 +6761,18 @@ var require$$0 = /*@__PURE__*/getAugmentedNamespace(empty$1);
 
 var algosdk = /*@__PURE__*/getDefaultExportFromCjs(algosdk_min.exports);
 
-var dead = "https://i.imgur.com/32rkmbN.png";
-var survive = "https://i.imgur.com/Lkstrxv.gif";
-var intro = "https://i.imgur.com/l3u1Isk.gif";
 var App = /** @class */ (function () {
     function App() {
-        //appid: number = 295983464;
-        //appid: number = 296114567;
-        this.appid = 296143611;
-        this.maxhit = 10;
         this.elem = document.createElement('div');
-        this.elem.id = 'viewport';
         this.elem.className = 'viewport';
         this.wallet = new myalgoConnect();
-        //this.algodClient = new algosdk.Algodv2(
-        //  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 
-        //  'http://127.0.0.1', 
-        //  '4001'
-        //);
         this.algodClient = new algosdk.Algodv2('', 'https://api.algoexplorer.io', '');
-        this.gamestate = null;
-        var disp = document.createElement('div');
-        disp.id = "health";
-        disp.innerHTML = "<div class=\"health\">\n      <img src=\"https://publicdomainpictures.net/pictures/260000/nahled/medical-sign.jpg\" />\n      <div class=\"desc\">\n        Bullet location: ?<br/>\n        Hits: ?<br/>\n        Misses: ?<br/>\n      </div>\n    </div>";
-        var dp = document.createElement('div');
-        dp.id = "buttons";
-        this.btns = dp;
-        this.elem.appendChild(disp);
-        this.elem.appendChild(dp);
-        this.elem.appendChild(this.getImage('https://66.media.tumblr.com/6c1420bae4cf047833b1626c4aa68349/tumblr_ofxojeul5m1qzl9pho1_500.gif'));
-        var msg = document.createElement('div');
-        msg.className = "message-box";
-        msg.id = "message";
-        msg.innerText = "dont kill me app.";
-        this.msg = msg;
-        this.elem.appendChild(msg);
     }
     App.prototype.getImage = function (title) {
-        if (title === void 0) { title = '/assets/intro.gif'; }
+        if (title === void 0) { title = 'intro.gif'; }
         var img = document.createElement('img');
         img.id = 'clip';
-        img.src = title;
-        img.style.width = "100%";
+        img.src = './assets/' + title;
         return img;
     };
     App.prototype.connect = function () {
@@ -6819,8 +6790,7 @@ var App = /** @class */ (function () {
                         this.addresses = this.accounts.map(function (account) { return account.address; });
                         document.getElementById("connect").style.display = 'none';
                         document.getElementById("call").style.display = 'block';
-                        this.updateImage(intro);
-                        this.readapp();
+                        this.elem.appendChild(this.getImage('intro.gif'));
                         return [3 /*break*/, 3];
                     case 2:
                         err_1 = _b.sent();
@@ -6841,20 +6811,16 @@ var App = /** @class */ (function () {
                         return [4 /*yield*/, this.algodClient.getTransactionParams()["do"]()];
                     case 1:
                         txnn = _a.sent();
-                        txn = __assign(__assign({}, txnn), { from: this.addresses[0], fee: 1000, flatFee: true, appIndex: this.appid, type: 'appl', appArgs: [btoa("take_shot")], appOnComplete: 0 });
+                        txn = __assign(__assign({}, txnn), { from: this.addresses[0], fee: 1000, flatFee: true, appIndex: 293086886, type: 'appl', appArgs: [btoa("str:take_shot")], appOnComplete: 0 });
                         return [4 /*yield*/, this.wallet.signTransaction(txn)];
                     case 2:
                         signedTxn = _a.sent();
                         return [4 /*yield*/, this.algodClient.sendRawTransaction(signedTxn.blob)["do"]()];
                     case 3:
                         _a.sent();
-                        this.readapp();
-                        this.updateImage(survive);
                         return [3 /*break*/, 5];
                     case 4:
                         err_2 = _a.sent();
-                        console.log("errored or died: " + this.gamestate.hit.uint + " > 10");
-                        this.updateImage(dead);
                         console.error(err_2);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
@@ -6864,48 +6830,21 @@ var App = /** @class */ (function () {
     };
     App.prototype.readapp = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var app_1, p, key, r, disp, err_3;
+            var app_1, p, key, r, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.algodClient.getApplicationByID(this.appid)["do"]()];
+                        return [4 /*yield*/, this.algodClient.getApplicationByID(293086886)["do"]()];
                     case 1:
                         app_1 = _a.sent();
                         p = {};
+                        console.log(app_1.params['global-state']);
                         for (key in app_1.params['global-state']) {
                             r = app_1.params['global-state'][key];
                             p[atob(r.key)] = r.value;
                         }
-                        if (this.gamestate !== null) {
-                            if (this.gamestate.hit.uint >= this.maxhit) {
-                                console.log("dead: " + this.gamestate.hit.uint + " > 10");
-                                this.msg.innerText = "dead: " + this.gamestate.hit.uint + " > ";
-                                this.updateImage(dead);
-                                return [2 /*return*/];
-                            }
-                            if (this.gamestate.hit.uint !== p.hit.uint) {
-                                console.log('got hit');
-                                this.msg.innerText = 'got hit';
-                            }
-                            if (this.gamestate.miss.uint !== p.miss.uint) {
-                                console.log('missed');
-                                this.msg.innerText = 'missed';
-                            }
-                        }
-                        else {
-                            if (p.hit.uint >= this.maxhit) {
-                                console.log("dead: " + p.hit.uint + " > 10");
-                                this.msg.innerText = "dead: " + p.hit.uint + " > 10";
-                                this.updateImage(dead);
-                            }
-                            else {
-                                this.msg.innerText = "nothing to see here";
-                            }
-                        }
-                        this.gamestate = p;
-                        disp = document.getElementById('health');
-                        disp.innerHTML = "<div class=\"health\">\n        <img src=\"https://publicdomainpictures.net/pictures/260000/nahled/medical-sign.jpg\" />\n        <div class=\"desc\">\n          Bullet location: " + this.gamestate.bullet_loc.uint + "<br/>\n          Hits: " + this.gamestate.hit.uint + " of " + this.maxhit + "<br/>\n          Misses: " + this.gamestate.miss.uint + "<br/>\n        </div>\n      </div>";
+                        this.gameState = p;
                         return [3 /*break*/, 3];
                     case 2:
                         err_3 = _a.sent();
@@ -6916,12 +6855,12 @@ var App = /** @class */ (function () {
             });
         });
     };
-    App.prototype.addbtn = function (b) {
-        this.btns.appendChild(b);
+    App.prototype.addbtn = function (e) {
+        this.elem.appendChild(e);
     };
-    App.prototype.updateImage = function (title) {
-        var clip = document.getElementById('clip');
-        clip.src = title;
+    App.prototype.update = function (title) {
+        this.elem.removeChild(document.getElementById('clip'));
+        this.elem.appendChild(this.getImage(title));
     };
     App.prototype.render = function () {
         return this.elem;
@@ -6956,9 +6895,3 @@ app.addbtn(btn);
 app.addbtn(callappbtn);
 window['app'] = app;
 document.getElementById('root').appendChild(app.render());
-var msg = "\n  disclaimer: the <a href=\"https://algoexplorer.io/application/" + app.appid + "\">contract</a>  is just a lame <a href=\"https://en.wikipedia.org/wiki/Linear_congruential_generator\">prng</a>. <a href=\"https://twitter.com/dzuqe\">@dzuqe</a> didnt even have the audacity to audit it. use at your own risk. you need to have a wallet at <a href=\"wallet.myalgo.com/\">myalgo</a>. <img src=\"https://icodrops.com/wp-content/uploads/2018/03/Algorand-logo.jpg\" style=\"width: 16px\"/></a> send shekels here mane: K7I7U3PC3XLWKSTSR2S2XAUJ5EK6YNWVSAU33L42QVFSRH4X4G6EG4Z6MQ\n";
-var msge = document.createElement('p');
-msge.innerHTML = msg;
-msge.style = "width: 480px; margin: 0 auto; background-color: gray";
-document.getElementById('root').appendChild(app.render());
-document.getElementById('root').appendChild(msge);
