@@ -41,7 +41,8 @@ class App {
     let disp = document.createElement('div');
     disp.id = "health";
     disp.innerHTML = `<div class="health">
-      <img src="https://publicdomainpictures.net/pictures/260000/nahled/medical-sign.jpg" />
+      <img src="https://i.imgur.com/orJnFPc.png" />
+      <div style="clear:both"></div>
       <div class="desc">
         Bullet location: ?<br/>
         Hits: ?<br/>
@@ -55,12 +56,16 @@ class App {
 
     this.elem.appendChild(disp);
     this.elem.appendChild(dp);
-    this.elem.appendChild(this.getImage('https://66.media.tumblr.com/6c1420bae4cf047833b1626c4aa68349/tumblr_ofxojeul5m1qzl9pho1_500.gif'));
+
+    let clearer = document.createElement('div');
+    clearer.style.clear = "both";
+    this.elem.appendChild(clearer);
 
     let msg = document.createElement('div');
     msg.className = "message-box";
     msg.id = "message";
-    msg.innerText = "dont kill me app.";
+    msg.style.width = "100%";
+    msg.innerText = "message: welcome to bottle shooter game";
     this.msg = msg;
 
     this.elem.appendChild(msg);
@@ -110,6 +115,7 @@ class App {
       this.updateImage(intro);
     } catch(err) {
       console.log("errored or died: " + this.gamestate.hit.uint + " > 10");
+      this.msg.innerText = "message: errored or died: " + this.gamestate.hit.uint + " > 10";
       this.updateImage(dead);
       console.error(err);
     }
@@ -127,34 +133,35 @@ class App {
       if (this.gamestate !== null) {
         if (this.gamestate.hit.uint >= this.maxhit) {
           console.log("dead: " + this.gamestate.hit.uint + " > 10");
-          this.msg.innerText = "dead: " + this.gamestate.hit.uint + " > ";
+          this.msg.innerText = "message: dead: " + this.gamestate.hit.uint + " > ";
           this.updateImage(dead);
           return ;
         }
         if (this.gamestate.hit.uint !== p.hit.uint) {
           console.log('got hit');
-          this.msg.innerText = 'got hit';
+          this.msg.innerText = 'message: got hit';
           this.updateImage(shatter);
         } 
         if (this.gamestate.miss.uint !== p.miss.uint) {
           console.log('missed');
-          this.msg.innerText = 'missed';
+          this.msg.innerText = 'message: missed';
           this.updateImage(intro);
         }
       } else {
         if (p.hit.uint >= this.maxhit) {
           console.log("dead: " + p.hit.uint + " > 10");
-          this.msg.innerText = "dead: " + p.hit.uint + " > 10";
+          this.msg.innerText = "message: dead: " + p.hit.uint + " > 10";
           this.updateImage(dead);
         } else {
-          this.msg.innerText = "nothing to see here";
+          this.msg.innerText = "message: nothing to see here";
         }
       }
 
       this.gamestate = p;
       let disp = document.getElementById('health');
       disp.innerHTML = `<div class="health">
-        <img src="https://publicdomainpictures.net/pictures/260000/nahled/medical-sign.jpg" />
+        <img src="https://i.imgur.com/orJnFPc.png" />
+        <div style="clear:both"></div>
         <div class="desc">
           Bullet location: ${this.gamestate.bullet_loc.uint}<br/>
           Hits: ${this.gamestate.hit.uint} of ${this.maxhit}<br/>
@@ -171,8 +178,8 @@ class App {
   }
 
   updateImage(title) {
-    let clip = document.getElementById('clip');
-    clip.src = title;
+    //let clip = document.getElementById('clip');
+    //clip.src = title;
   }
 
   render() {
@@ -192,7 +199,7 @@ btn.onclick = async function() {
 let callappbtn = document.createElement('button');
 callappbtn.id = "call";
 callappbtn.style.display = "none";
-callappbtn.innerText = "Call App";
+callappbtn.innerText = " 🔫 Take Shot";
 callappbtn.onclick = async function() {
   app.callapp();
 }
@@ -205,12 +212,11 @@ window['app'] = app;
 document.getElementById('root').appendChild(app.render());
 
 let msg = `
-  disclaimer: the <a href="https://algoexplorer.io/application/${app.appid}">contract</a>  is just a lame <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">prng</a>. <a href="https://twitter.com/dzuqe">@dzuqe</a> didnt even have the audacity to audit it. use at your own risk. you need to have a wallet at <a href="wallet.myalgo.com/">myalgo</a>. <img src="https://icodrops.com/wp-content/uploads/2018/03/Algorand-logo.jpg" style="width: 16px"/></a> send shekels here mane: K7I7U3PC3XLWKSTSR2S2XAUJ5EK6YNWVSAU33L42QVFSRH4X4G6EG4Z6MQ
-`;
+  disclaimer: the <a href="https://algoexplorer.io/application/${app.appid}">contract</a>  is just a lame <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">prng</a>. It hasn't been through a security audit so please use at your own risk.`;
 
 let msge = document.createElement('p');
 msge.innerHTML = msg;
-msge.style = "width: 480px; margin: 0 auto; background-color: gray";
+msge.className = "disclaimer";
 
 document.getElementById('root').appendChild(app.render());
 document.getElementById('root').appendChild(msge);

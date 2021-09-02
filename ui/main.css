@@ -4,7 +4,7 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-image: url(https://i.imgur.com/UCOVyi5.jpg);
+  background-image: url(https://i.imgur.com/dpgnxWA.jpg);
   background-size: 100%;
 }
 
@@ -13,20 +13,16 @@ body {
   background-color: black;
   color: white;
   margin: 100px auto 0 auto;
-}
-
-#health {
-  text-align: left;
-  width: 60%;
-  float : left;
+  position: relative;
 }
 
 #buttons {
-  width: 30%;
-  float: right;
+  position: absolute;
+  left: 37%;
+  top: 20%;
 }
 
-.health {
+#health, .health {
   width: 480px;
   background-color: black;
   color: white;
@@ -34,8 +30,7 @@ body {
 }
 
 .health > img {
-  float: left;
-  width: 60px;
+  width: 100%;
 }
 
 .health > .desc {
@@ -43,8 +38,6 @@ body {
 }
 
 button {
-  float: right;
-  margin: 5px;
   border: none;
   padding: 5px 8px;
   background-color: white;
@@ -57,6 +50,7 @@ button {
   text-align: center;
   background-color: black;
   color: white;
+  font-style: italic;
 }
 
 .algo {
@@ -65,4 +59,25 @@ button {
   background-image: url(https://icodrops.com/wp-content/uploads/2018/03/Algorand-logo.jpg);
   background-size: 24px;
 
+}
+
+.disclaimer {
+  width: 480px;
+  margin: 0 auto;
+  background-color: maroon;
+  color: #e2d6a6;
+  font-weight: bold;
+}
+
+.disclaimer > a {
+  color: #10a1db;
+}
+
+.footer {
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  position: absolute;
+  color: white;
+  font-weight: bold;
 }
